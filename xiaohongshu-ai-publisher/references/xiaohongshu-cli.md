@@ -4,6 +4,15 @@ This skill uses `jackwener/xiaohongshu-cli` as the publishing backend.
 
 ## Install
 
+For end users installing this skill package:
+
+```bash
+npx github:pengcong2020520/xhs-publisher-skill install
+npx github:pengcong2020520/xhs-publisher-skill env
+npx github:pengcong2020520/xhs-publisher-skill login
+npx github:pengcong2020520/xhs-publisher-skill check
+```
+
 Recommended:
 
 ```bash
@@ -45,4 +54,3 @@ This skill does not assume draft-box support. It publishes directly only after e
 - `rate_limited`: wait before retrying.
 - `captcha_or_risk_control`: stop and let the user resolve the platform challenge.
 - `unknown`: preserve logs and do not retry blindly.
-

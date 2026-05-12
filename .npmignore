@@ -1,6 +1,8 @@
+.DS_Store
+.git/
 .venv/
 __pycache__/
 *.pyc
 runs/
-.DS_Store
-*.tgz
+tests/
+docs/

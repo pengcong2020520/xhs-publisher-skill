@@ -1,0 +1,30 @@
+{
+  "name": "xhs-publisher-skill",
+  "version": "0.1.0",
+  "description": "Install and bootstrap the Xiaohongshu AI Publisher Codex skill.",
+  "bin": {
+    "xhs-publisher-skill": "bin/xhs-publisher-skill.js"
+  },
+  "files": [
+    "bin/",
+    "xiaohongshu-ai-publisher/SKILL.md",
+    "xiaohongshu-ai-publisher/agents/",
+    "xiaohongshu-ai-publisher/assets/",
+    "xiaohongshu-ai-publisher/references/",
+    "xiaohongshu-ai-publisher/scripts/*.py"
+  ],
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests -v",
+    "pack:dry-run": "npm pack --dry-run"
+  },
+  "keywords": [
+    "codex-skill",
+    "xiaohongshu",
+    "xhs",
+    "ai-content"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
