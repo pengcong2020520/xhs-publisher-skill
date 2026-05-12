@@ -44,7 +44,7 @@ Create a run directory before generating artifacts, such as `runs/YYYYMMDD-HHMM-
 5. Run `scripts/normalize_note.py` to repair numbering and scan light risks.
 6. Show the normalized copy and risk notes. Ask for copy confirmation.
 7. Run `scripts/render_cards.py` to create three HTML cards. Use `--screenshot` when Playwright is available and the user is ready for image preview.
-8. Show the card paths or screenshots. Ask for image confirmation.
+8. Show the card paths or screenshots. Ask for image confirmation. If the user rejects the visual direction, revise the rendered cards first; do not publish or update the reusable theme until the user confirms the style.
 9. Run `scripts/check_env.py`.
 10. Run `scripts/publish_note.py` without `--execute` first to show the exact dry-run command.
 11. After final publish confirmation, run `scripts/publish_note.py --execute`.
@@ -59,7 +59,11 @@ Create a run directory before generating artifacts, such as `runs/YYYYMMDD-HHMM-
 
 - `scripts/render_cards.py`
   - Reads normalized JSON.
-  - Builds three HTML card files.
+  - Builds three HTML card files using the approved Xiaohongshu visual theme:
+    - A bold grid-paper cover with large black title, thick border, neon highlight, and separated point cards.
+    - A dark glassmorphism core-view card for judgment lists.
+    - A light grid-paper action card for practical checklists.
+  - Splits semicolon, comma, Chinese comma, and enumeration separator clauses into independent visual points.
   - Optionally creates PNG screenshots through Playwright with `--screenshot`.
   - Default card size is 1242x1656 with optional 2x device scale.
 
@@ -92,4 +96,3 @@ If publishing fails:
 5. If retries fail, stop and preserve the run directory with source copy, normalized copy, HTML, images, command, and logs.
 
 Do not delete artifacts after a failed publish.
-

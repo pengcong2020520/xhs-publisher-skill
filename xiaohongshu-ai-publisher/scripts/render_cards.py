@@ -36,7 +36,7 @@ def build_cards_from_placeholders(placeholders: list[dict[str, object]], title: 
 def render_card_html(card: dict[str, str]) -> str:
     points = split_card_points(card["body"])
     points_html = render_points(points)
-    hook = clean_card_body(card["body"])
+    hook = build_hook(card, points)
     card_class = f"card-shell xiaohongshu-card card-{slug_kind(card['kind'])}"
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -51,7 +51,7 @@ def render_card_html(card: dict[str, str]) -> str:
 <body>
   <main class="{card_class}" style="width: {CARD_WIDTH}px; height: {CARD_HEIGHT}px;">
     <div class="topbar">
-      <span class="badge">爆款观点</span>
+      <span class="badge">观点洞察</span>
       <span class="badge badge-light">{html.escape(card["kind"])}</span>
     </div>
     <section class="hero">
@@ -61,8 +61,8 @@ def render_card_html(card: dict[str, str]) -> str:
     </section>
     <section class="point-list">{points_html}</section>
     <footer>
-      <span>建议收藏后慢慢看</span>
-      <span>AI insight</span>
+      <span>先收藏再复盘</span>
+      <span>AI SKILL NOTE</span>
     </footer>
   </main>
 </body>
@@ -75,8 +75,8 @@ def default_css() -> str:
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: #ffe8e0;
-      color: #191512;
+      background: #f5f2e9;
+      color: #161616;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
     }
     .card-shell {
@@ -85,30 +85,31 @@ def default_css() -> str:
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 72px 72px 64px;
+      padding: 76px 74px 64px;
       background:
-        radial-gradient(circle at 12% 9%, rgba(255,255,255,.92) 0 11%, transparent 12%),
-        linear-gradient(145deg, #ff4f3e 0%, #ff7a35 42%, #ffd96a 100%);
+        linear-gradient(90deg, rgba(22,22,22,.08) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(22,22,22,.08) 1px, transparent 1px),
+        #f9f6eb;
+      background-size: 44px 44px;
       border: 0;
     }
     .card-shell::before {
       content: "";
       position: absolute;
-      inset: 34px;
-      border: 6px solid rgba(25, 21, 18, .92);
-      border-radius: 42px;
+      inset: 48px;
+      border: 5px solid rgba(22, 22, 22, .92);
+      border-radius: 0;
       pointer-events: none;
     }
     .card-shell::after {
-      content: "AI";
+      content: "";
       position: absolute;
-      right: -42px;
-      top: 202px;
-      font-size: 250px;
-      line-height: 1;
-      font-weight: 900;
-      color: rgba(255, 255, 255, .24);
-      transform: rotate(9deg);
+      right: -170px;
+      top: -74px;
+      width: 430px;
+      height: 128px;
+      background: #e65f2f;
+      transform: rotate(45deg);
     }
     .topbar {
       position: relative;
@@ -121,83 +122,86 @@ def default_css() -> str:
     .badge {
       display: inline-flex;
       align-items: center;
-      min-height: 58px;
-      padding: 0 28px;
-      border: 4px solid #191512;
-      border-radius: 999px;
-      background: #191512;
-      color: #fff8ea;
-      font-size: 32px;
-      font-weight: 800;
+      min-height: 54px;
+      padding: 0 24px;
+      border: 4px solid #161616;
+      border-radius: 0;
+      background: #161616;
+      color: #fbf7eb;
+      font-size: 30px;
+      font-weight: 850;
     }
     .badge-light {
-      background: #fff8ea;
-      color: #191512;
+      background: #b9ff59;
+      color: #161616;
     }
     .hero {
       position: relative;
       z-index: 1;
-      padding-top: 56px;
+      padding-top: 58px;
     }
     .kicker {
       display: inline-block;
-      margin: 0 0 34px;
-      padding: 14px 22px;
-      border-radius: 16px;
-      background: rgba(255, 248, 234, .92);
-      color: #b62018;
+      margin: 0 0 32px;
+      padding: 12px 20px;
+      border: 4px solid #161616;
+      border-radius: 0;
+      background: #ffffff;
+      color: #161616;
       font-size: 36px;
       line-height: 1.15;
       font-weight: 900;
+      box-shadow: 8px 8px 0 #59baff;
     }
     h1 {
-      max-width: 1010px;
+      max-width: 1020px;
       margin: 0;
-      font-size: 104px;
-      line-height: 1.04;
+      font-size: 100px;
+      line-height: 1.03;
       font-weight: 950;
       letter-spacing: 0;
-      color: #fff8ea;
-      text-shadow: 7px 7px 0 #191512;
+      color: #161616;
+      text-shadow: 5px 5px 0 #ffffff;
     }
     .hook {
-      max-width: 930px;
-      margin: 42px 0 0;
-      padding: 28px 32px;
-      border: 5px solid #191512;
-      border-radius: 28px;
-      background: #fff8ea;
-      box-shadow: 12px 12px 0 rgba(25, 21, 18, .9);
-      font-size: 44px;
-      line-height: 1.28;
-      font-weight: 850;
+      display: inline-block;
+      max-width: 940px;
+      margin: 40px 0 0;
+      padding: 18px 26px;
+      border: 5px solid #161616;
+      border-radius: 0;
+      background: #b9ff59;
+      box-shadow: 10px 10px 0 #161616;
+      font-size: 42px;
+      line-height: 1.2;
+      font-weight: 900;
     }
     .point-list {
       position: relative;
       z-index: 1;
       display: grid;
-      gap: 22px;
+      gap: 26px;
       margin-top: 42px;
     }
     .point {
       display: grid;
-      grid-template-columns: 76px 1fr;
+      grid-template-columns: 82px 1fr;
       gap: 22px;
       align-items: start;
-      padding: 28px 30px;
-      border: 5px solid #191512;
-      border-radius: 28px;
-      background: rgba(255, 248, 234, .94);
-      box-shadow: 9px 9px 0 rgba(25, 21, 18, .88);
+      padding: 30px 32px;
+      border: 5px solid #161616;
+      border-radius: 0;
+      background: #ffffff;
+      box-shadow: 9px 9px 0 rgba(22, 22, 22, .92);
     }
     .point-number {
       display: grid;
       place-items: center;
-      width: 76px;
-      height: 76px;
-      border-radius: 22px;
-      background: #191512;
-      color: #fff8ea;
+      width: 82px;
+      height: 82px;
+      border-radius: 999px;
+      background: #161616;
+      color: #ffffff;
       font-size: 38px;
       line-height: 1;
       font-weight: 900;
@@ -207,11 +211,12 @@ def default_css() -> str:
       line-height: 1.25;
       font-weight: 850;
     }
-    .card-cover .point-list {
-      grid-template-columns: 1fr 1fr;
-    }
     .card-cover .point {
-      min-height: 150px;
+      background: #fffef9;
+    }
+    .card-cover .point-text {
+      font-size: 48px;
+      line-height: 1.18;
     }
     footer {
       position: relative;
@@ -220,19 +225,80 @@ def default_css() -> str:
       justify-content: space-between;
       align-items: center;
       padding-top: 36px;
-      color: #191512;
-      font-size: 32px;
+      color: #77736c;
+      font-size: 30px;
       font-weight: 800;
     }
     .card-核心观点 {
       background:
-        radial-gradient(circle at 90% 10%, rgba(255,255,255,.9) 0 10%, transparent 11%),
-        linear-gradient(145deg, #1d1bff 0%, #7257ff 42%, #ffcf32 100%);
+        radial-gradient(circle at 13% 13%, rgba(112,56,255,.55) 0 12%, transparent 25%),
+        radial-gradient(circle at 90% 90%, rgba(255,70,130,.42) 0 12%, transparent 27%),
+        linear-gradient(145deg, #070b16 0%, #11152a 100%);
+      color: #ffffff;
+    }
+    .card-核心观点::before {
+      border-color: rgba(255, 255, 255, .22);
+      box-shadow: inset 0 0 90px rgba(255,255,255,.08);
+    }
+    .card-核心观点::after {
+      background: rgba(105, 78, 255, .62);
+    }
+    .card-核心观点 .badge {
+      border-color: rgba(255,255,255,.92);
+      background: rgba(255,255,255,.92);
+      color: #090c17;
+    }
+    .card-核心观点 .badge-light {
+      background: transparent;
+      color: #ffffff;
+    }
+    .card-核心观点 .kicker {
+      border-color: rgba(255,255,255,.35);
+      background: rgba(255,255,255,.08);
+      color: #ffffff;
+      box-shadow: 8px 8px 0 rgba(105, 78, 255, .7);
+    }
+    .card-核心观点 h1 {
+      color: #ffffff;
+      text-shadow: 0 0 26px rgba(255,255,255,.22);
+    }
+    .card-核心观点 .hook {
+      border-color: rgba(255,255,255,.34);
+      background: rgba(255,255,255,.09);
+      color: #ffffff;
+      box-shadow: 10px 10px 0 rgba(105, 78, 255, .65);
+    }
+    .card-核心观点 .point {
+      border-color: rgba(255,255,255,.26);
+      background: rgba(255,255,255,.1);
+      box-shadow: 12px 12px 0 rgba(0,0,0,.35);
+    }
+    .card-核心观点 .point-number {
+      background: #ffffff;
+      color: #090c17;
+    }
+    .card-核心观点 footer {
+      color: rgba(255,255,255,.62);
     }
     .card-总结行动 {
       background:
-        radial-gradient(circle at 16% 14%, rgba(255,255,255,.9) 0 10%, transparent 11%),
-        linear-gradient(145deg, #00a86b 0%, #25c6a2 42%, #fff06a 100%);
+        linear-gradient(90deg, rgba(22,22,22,.07) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(22,22,22,.07) 1px, transparent 1px),
+        #ffffff;
+      background-size: 34px 34px;
+    }
+    .card-总结行动 .kicker {
+      box-shadow: 8px 8px 0 #ffb02e;
+    }
+    .card-总结行动 .hook {
+      background: #59baff;
+      color: #161616;
+    }
+    .card-总结行动 .point:nth-child(2) {
+      transform: rotate(-1deg);
+    }
+    .card-总结行动 .point:nth-child(3) {
+      transform: rotate(1deg);
     }
     """
 
@@ -259,7 +325,19 @@ def split_card_points(body: str) -> list[str]:
 def re_split_points(text: str) -> list[str]:
     import re
 
-    return re.split(r"[;；]\s*|\n+", text)
+    return re.split(r"[;；,，、]\s*|\n+", text)
+
+
+def build_hook(card: dict[str, str], points: list[str]) -> str:
+    if len(points) <= 1:
+        return points[0] if points else clean_card_body(card["body"])
+    if card["kind"] == "封面":
+        return "这不是替代焦虑，是能力平权"
+    if card["kind"] == "核心观点":
+        return f"{len(points)} 个判断，一图看懂"
+    if card["kind"] == "总结行动":
+        return f"{len(points)} 个动作，马上能练"
+    return f"{len(points)} 个重点，拆开看"
 
 
 def render_points(points: list[str]) -> str:

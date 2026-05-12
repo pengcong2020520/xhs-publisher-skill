@@ -28,6 +28,8 @@ runs/YYYYMMDD-HHMM-topic/
 
 Only after these gates may the agent execute a live publish command.
 
+If the user confirms a new visual style after reviewing screenshots, update `scripts/render_cards.py`, `references/style-guide.md`, and focused tests before installing or packaging the skill. Do not turn a rejected one-off visual experiment into the reusable theme.
+
 ## Default Commands
 
 Normalize:
@@ -59,4 +61,3 @@ Live publish:
 ```bash
 python3 xiaohongshu-ai-publisher/scripts/publish_note.py --title "<title>" --body "<body>" --images runs/<run>/cards/card-01.png runs/<run>/cards/card-02.png runs/<run>/cards/card-03.png --execute
 ```
-

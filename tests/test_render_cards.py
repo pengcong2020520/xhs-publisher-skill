@@ -51,7 +51,7 @@ class RenderCardsTests(unittest.TestCase):
             self.assertIn("1242", html)
             self.assertIn("card-shell", html)
             self.assertIn("xiaohongshu-card", html)
-            self.assertIn("爆款观点", html)
+            self.assertIn("观点洞察", html)
 
     def test_prepare_screenshot_html_scales_card_for_hidpi_output(self):
         module = load_module()
@@ -72,6 +72,32 @@ class RenderCardsTests(unittest.TestCase):
             points,
             ["不是代码不重要了", "不是程序员没有价值了", "不是人人都要学编程"],
         )
+
+    def test_split_card_points_turns_clauses_into_independent_points(self):
+        module = load_module()
+
+        points = module.split_card_points("三个判断: 代码会越来越便宜，定义问题会越来越贵，会调用 Skill 的人更吃香")
+
+        self.assertEqual(
+            points,
+            ["代码会越来越便宜", "定义问题会越来越贵", "会调用 Skill 的人更吃香"],
+        )
+
+    def test_render_card_html_does_not_repeat_long_clause_as_hook(self):
+        module = load_module()
+
+        html = module.render_card_html(
+            {
+                "filename": "card-01.html",
+                "kind": "封面",
+                "headline": "Vibe Coding 真正改变的不是程序员",
+                "body": "核心钩子: 不是程序员消失了;是普通人也能调用编程能力",
+            }
+        )
+
+        self.assertNotIn("不是程序员消失了;是普通人也能调用编程能力", html)
+        self.assertIn("不是程序员消失了", html)
+        self.assertIn("是普通人也能调用编程能力", html)
 
 
 if __name__ == "__main__":

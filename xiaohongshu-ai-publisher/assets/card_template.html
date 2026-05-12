@@ -7,11 +7,21 @@
   <link rel="stylesheet" href="./card_style.css">
 </head>
 <body>
-  <main class="card-shell">
-    <p class="eyebrow">{{ kind }}</p>
-    <h1>{{ headline }}</h1>
-    <section class="insight">{{ body }}</section>
-    <footer>AI insight / Xiaohongshu</footer>
+  <main class="card-shell card-{{ kind }}">
+    <div class="topbar">
+      <span class="badge">观点洞察</span>
+      <span class="badge badge-light">{{ kind }}</span>
+    </div>
+    <section class="hero">
+      <p class="kicker">AI 趋势观察</p>
+      <h1>{{ headline }}</h1>
+      <p class="hook">{{ hook }}</p>
+    </section>
+    <section class="point-list">{{ points }}</section>
+    <footer>
+      <span>先收藏再复盘</span>
+      <span>AI SKILL NOTE</span>
+    </footer>
   </main>
 </body>
 </html>

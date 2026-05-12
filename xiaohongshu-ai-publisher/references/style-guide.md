@@ -37,3 +37,18 @@ Use exactly three placeholders unless the user asks otherwise:
 [图3: 总结行动 | 建议清单: ...]
 ```
 
+## Card Visual Theme
+
+Default to the confirmed Xiaohongshu reference-inspired theme:
+
+- Cover: grid-paper background, thick black border, oversized black title, white text shadow, neon green highlight, small black/green badges, and each hook clause as a separate numbered point.
+- Core viewpoint: dark blue-purple glass card, white high-contrast typography, translucent point containers, and one short hook such as `3 个判断，一图看懂`.
+- Summary action: light grid-paper background, black outline cards, slight rotation for handwritten note energy, bright blue/orange accent labels.
+
+Keep cards readable at mobile feed size:
+
+- Use short card text; visual points should usually be 6-15 Chinese characters.
+- Split long image sentences into independent points. Treat `;`, `；`, `,`, `，`, `、`, and line breaks as point separators.
+- Do not repeat a full long placeholder sentence as a hook. Use a short summary hook, then render the clauses as separate visual points.
+- Prefer strong contrast and plain backgrounds over decorative gradients.
+- Avoid dense paragraphs inside images unless the user explicitly asks for a text-heavy note page.
