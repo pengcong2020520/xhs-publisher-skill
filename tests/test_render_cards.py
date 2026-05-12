@@ -50,6 +50,8 @@ class RenderCardsTests(unittest.TestCase):
             self.assertIn("普通人别再追AI工具了", html)
             self.assertIn("1242", html)
             self.assertIn("card-shell", html)
+            self.assertIn("xiaohongshu-card", html)
+            self.assertIn("爆款观点", html)
 
     def test_prepare_screenshot_html_scales_card_for_hidpi_output(self):
         module = load_module()
@@ -60,6 +62,16 @@ class RenderCardsTests(unittest.TestCase):
         self.assertIn("transform: scale(2);", scaled)
         self.assertIn("2484px", scaled)
         self.assertIn("3312px", scaled)
+
+    def test_split_card_points_parses_semicolon_content(self):
+        module = load_module()
+
+        points = module.split_card_points("三个判断: 不是代码不重要了;不是程序员没有价值了;不是人人都要学编程")
+
+        self.assertEqual(
+            points,
+            ["不是代码不重要了", "不是程序员没有价值了", "不是人人都要学编程"],
+        )
 
 
 if __name__ == "__main__":

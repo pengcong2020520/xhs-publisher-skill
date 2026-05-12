@@ -50,6 +50,7 @@ def renumber_ordered_lists(text: str) -> str:
     counters: dict[int, int] = {}
     markers: dict[int, str] = {}
     previous_key: int | None = None
+    active_key: int | None = None
     normalized: list[str] = []
 
     for line in lines:
@@ -58,19 +59,20 @@ def renumber_ordered_lists(text: str) -> str:
             if line.strip():
                 previous_key = None
             else:
-                counters.clear()
                 previous_key = None
             normalized.append(line)
             continue
 
         indent, _number, marker, spacing, content = match.groups()
         key = len(indent)
-        if previous_key != key:
+        marker_changed_after_gap = previous_key != key and key in markers and marker != markers[key]
+        if active_key != key or marker_changed_after_gap:
             counters[key] = 1
             markers[key] = marker
         else:
             counters[key] = counters.get(key, 0) + 1
         previous_key = key
+        active_key = key
         normalized.append(f"{indent}{counters[key]}{markers[key]}{spacing or ' '}{content}")
 
     return "\n".join(normalized)
@@ -91,6 +93,8 @@ def scan_light_risks(text: str) -> list[dict[str, str]]:
     for category, patterns in RISK_PATTERNS.items():
         for pattern in patterns:
             if pattern in text:
+                if category == "absolute_claim" and f"不{pattern}" in text:
+                    continue
                 risks.append(
                     {
                         "category": category,

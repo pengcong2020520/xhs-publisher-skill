@@ -28,6 +28,15 @@ class NormalizeNoteTests(unittest.TestCase):
             "2) 新列表第二条",
         )
 
+    def test_renumber_ordered_lists_continues_across_blank_lines(self):
+        module = load_module()
+        text = "1. 第一条\n\n过去如此。\n\n2. 第二条\n\n现在如此。\n\n3. 第三条"
+
+        self.assertEqual(
+            module.renumber_ordered_lists(text),
+            "1. 第一条\n\n过去如此。\n\n2. 第二条\n\n现在如此。\n\n3. 第三条",
+        )
+
     def test_extract_image_placeholders_returns_three_structured_cards(self):
         module = load_module()
         text = (
@@ -53,6 +62,13 @@ class NormalizeNoteTests(unittest.TestCase):
         self.assertIn("absolute_claim", categories)
         self.assertIn("income_promise", categories)
         self.assertIn("unsupported_claim", categories)
+
+    def test_scan_light_risks_does_not_flag_negated_absolute_claim(self):
+        module = load_module()
+
+        risks = module.scan_light_risks("你不一定需要雇一个完整角色。")
+
+        self.assertNotIn("absolute_claim", {risk["category"] for risk in risks})
 
 
 if __name__ == "__main__":
