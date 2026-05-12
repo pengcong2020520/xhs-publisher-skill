@@ -118,6 +118,25 @@ def write_card_html(cards: list[dict[str, str]], output_dir: Path) -> list[Path]
     return paths
 
 
+def prepare_screenshot_html(source_html: str, scale: int) -> str:
+    if scale <= 1:
+        return source_html
+    scaled_width = CARD_WIDTH * scale
+    scaled_height = CARD_HEIGHT * scale
+    injected = f"""
+    html, body {{
+      width: {scaled_width}px;
+      height: {scaled_height}px;
+      overflow: hidden;
+    }}
+    .card-shell {{
+      transform: scale({scale});
+      transform-origin: top left;
+    }}
+    """
+    return source_html.replace("</style>", f"{injected}\n  </style>", 1)
+
+
 def screenshot_cards(html_paths: list[Path], output_dir: Path, scale: int = 2) -> list[Path]:
     if not shutil.which("npx"):
         raise RuntimeError("npx is required for Playwright screenshots. Install Node.js and Playwright first.")
@@ -125,16 +144,22 @@ def screenshot_cards(html_paths: list[Path], output_dir: Path, scale: int = 2) -
     image_paths: list[Path] = []
     for html_path in html_paths:
         image_path = output_dir / f"{html_path.stem}.png"
+        screenshot_source = html_path
+        viewport_width = CARD_WIDTH
+        viewport_height = CARD_HEIGHT
+        if scale > 1:
+            screenshot_source = output_dir / f"{html_path.stem}-screenshot.html"
+            screenshot_source.write_text(prepare_screenshot_html(html_path.read_text(encoding="utf-8"), scale), encoding="utf-8")
+            viewport_width = CARD_WIDTH * scale
+            viewport_height = CARD_HEIGHT * scale
         subprocess.run(
             [
                 "npx",
                 "playwright",
                 "screenshot",
                 "--viewport-size",
-                f"{CARD_WIDTH},{CARD_HEIGHT}",
-                "--device-scale-factor",
-                str(scale),
-                html_path.resolve().as_uri(),
+                f"{viewport_width},{viewport_height}",
+                screenshot_source.resolve().as_uri(),
                 str(image_path),
             ],
             check=True,

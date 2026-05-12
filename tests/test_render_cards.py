@@ -51,6 +51,16 @@ class RenderCardsTests(unittest.TestCase):
             self.assertIn("1242", html)
             self.assertIn("card-shell", html)
 
+    def test_prepare_screenshot_html_scales_card_for_hidpi_output(self):
+        module = load_module()
+        source = "<html><head><style>.card-shell { color: #111; }</style></head><body></body></html>"
+
+        scaled = module.prepare_screenshot_html(source, 2)
+
+        self.assertIn("transform: scale(2);", scaled)
+        self.assertIn("2484px", scaled)
+        self.assertIn("3312px", scaled)
+
 
 if __name__ == "__main__":
     unittest.main()
