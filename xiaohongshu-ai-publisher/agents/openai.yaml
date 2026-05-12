@@ -1,0 +1,6 @@
+interface:
+  display_name: "Xiaohongshu AI Publisher"
+  short_description: "AI内容转小红书图文并确认发布"
+  default_prompt: "Use $xiaohongshu-ai-publisher to turn this AI article into a confirmed Xiaohongshu viewpoint note with three cards."
+policy:
+  allow_implicit_invocation: true
