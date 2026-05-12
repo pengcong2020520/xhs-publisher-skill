@@ -4,15 +4,6 @@ This skill uses `jackwener/xiaohongshu-cli` as the publishing backend.
 
 ## Install
 
-For end users installing this skill package:
-
-```bash
-npx github:pengcong2020520/xhs-publisher-skill install
-npx github:pengcong2020520/xhs-publisher-skill env
-npx github:pengcong2020520/xhs-publisher-skill login
-npx github:pengcong2020520/xhs-publisher-skill check
-```
-
 Recommended:
 
 ```bash
