@@ -21,7 +21,7 @@ class PublishNoteTests(unittest.TestCase):
 
         self.assertEqual(
             command,
-            ["xhs", "post", "--title", "标题", "--body", "正文", "--images", "a.png", "b.png"],
+            ["xhs", "post", "--title", "标题", "--body", "正文", "--images", "a.png", "--images", "b.png"],
         )
 
     def test_validate_images_rejects_missing_files_and_non_images(self):

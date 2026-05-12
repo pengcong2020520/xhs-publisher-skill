@@ -15,7 +15,10 @@ IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 
 
 def build_post_command(title: str, body: str, images: list[str]) -> list[str]:
-    return ["xhs", "post", "--title", title, "--body", body, "--images", *images]
+    command = ["xhs", "post", "--title", title, "--body", body]
+    for image in images:
+        command.extend(["--images", image])
+    return command
 
 
 def validate_images(images: list[str]) -> list[str]:
