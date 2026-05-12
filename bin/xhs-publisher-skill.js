@@ -56,10 +56,10 @@ function installEnv() {
     run("pipx", ["install", "xiaohongshu-cli"], { allowFailure: true });
   }
 
-  if (hasCommand("npx")) {
-    run("npx", ["playwright", "install", "chromium"], { allowFailure: true });
+  if (hasCommand("npm")) {
+    run("npm", ["exec", "--yes", "--package", "playwright", "--", "playwright", "install", "chromium"], { allowFailure: true });
   } else {
-    console.warn("npx is not available. Install Node.js before generating screenshots.");
+    console.warn("npm/npx is not available. Install Node.js before generating screenshots.");
   }
 
   console.log("");
