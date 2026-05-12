@@ -13,9 +13,13 @@ runs/YYYYMMDD-HHMM-topic/
     card-01.html
     card-02.html
     card-03.html
+    card-04.html
+    card-05.html
     card-01.png
     card-02.png
     card-03.png
+    card-04.png
+    card-05.png
   publish-command.json
   publish-error.log
 ```
@@ -53,11 +57,11 @@ python3 xiaohongshu-ai-publisher/scripts/render_cards.py --input runs/<run>/norm
 Dry-run publish:
 
 ```bash
-python3 xiaohongshu-ai-publisher/scripts/publish_note.py --title "<title>" --body "<body>" --images runs/<run>/cards/card-01.png runs/<run>/cards/card-02.png runs/<run>/cards/card-03.png
+python3 xiaohongshu-ai-publisher/scripts/publish_note.py --title "<title>" --body "<body>" --images runs/<run>/cards/card-01.png runs/<run>/cards/card-02.png runs/<run>/cards/card-03.png runs/<run>/cards/card-04.png runs/<run>/cards/card-05.png
 ```
 
 Live publish:
 
 ```bash
-python3 xiaohongshu-ai-publisher/scripts/publish_note.py --title "<title>" --body "<body>" --images runs/<run>/cards/card-01.png runs/<run>/cards/card-02.png runs/<run>/cards/card-03.png --execute
+python3 xiaohongshu-ai-publisher/scripts/publish_note.py --title "<title>" --body "<body>" --images runs/<run>/cards/card-01.png runs/<run>/cards/card-02.png runs/<run>/cards/card-03.png runs/<run>/cards/card-04.png runs/<run>/cards/card-05.png --execute
 ```

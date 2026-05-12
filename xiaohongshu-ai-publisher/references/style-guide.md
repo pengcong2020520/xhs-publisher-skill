@@ -29,21 +29,27 @@ Use a viewpoint-insight account voice: sharp enough to have a stance, but not ex
 
 ## Image Placeholder Pattern
 
-Use exactly three placeholders unless the user asks otherwise:
+Use five placeholders by default. Use six when the source has a concrete case, workflow example, or memorable closing idea that deserves its own card:
 
 ```text
 [图1: 封面 | 核心钩子: ...]
-[图2: 核心观点 | 三个判断: ...]
-[图3: 总结行动 | 建议清单: ...]
+[图2: 问题背景 | 关键矛盾: ...]
+[图3: 核心观点 | 三个判断: ...]
+[图4: 方法拆解 | 操作路径: ...]
+[图5: 总结行动 | 建议清单: ...]
+[图6: 案例启发 | 可复用经验: ...]
 ```
+
+If the note is short, omit 图6 rather than padding. If the user explicitly asks for three cards, respect that override.
 
 ## Card Visual Theme
 
 Default to the confirmed Xiaohongshu reference-inspired theme:
 
 - Cover: grid-paper background, thick black border, oversized black title, white text shadow, neon green highlight, small black/green badges, and each hook clause as a separate numbered point.
+- Problem/background: light grid-paper page with a conflict-focused headline and 2-4 short contradiction points.
 - Core viewpoint: dark blue-purple glass card, white high-contrast typography, translucent point containers, and one short hook such as `3 个判断，一图看懂`.
-- Summary action: light grid-paper background, black outline cards, slight rotation for handwritten note energy, bright blue/orange accent labels.
+- Method/case/action: light grid-paper background, black outline cards, slight rotation for handwritten note energy, bright blue/orange accent labels.
 
 Keep cards readable at mobile feed size:
 

@@ -160,3 +160,39 @@ footer {
   font-size: 30px;
   font-weight: 800;
 }
+
+.card-问题背景 .hook {
+  background: #ffb02e;
+}
+
+.card-方法拆解 {
+  background:
+    linear-gradient(90deg, rgba(22, 22, 22, .07) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(22, 22, 22, .07) 1px, transparent 1px),
+    #f6fbff;
+  background-size: 34px 34px;
+}
+
+.card-方法拆解 .kicker {
+  box-shadow: 8px 8px 0 #b9ff59;
+}
+
+.card-方法拆解 .hook {
+  background: #59baff;
+}
+
+.card-案例启发,
+.card-金句总结 {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(185, 255, 89, .42) 0 10%, transparent 22%),
+    linear-gradient(90deg, rgba(22, 22, 22, .07) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(22, 22, 22, .07) 1px, transparent 1px),
+    #fffdf6;
+  background-size: auto, 38px 38px, 38px 38px, auto;
+}
+
+.card-案例启发 .hook,
+.card-金句总结 .hook {
+  background: #161616;
+  color: #ffffff;
+}

@@ -300,6 +300,53 @@ def default_css() -> str:
     .card-总结行动 .point:nth-child(3) {
       transform: rotate(1deg);
     }
+    .card-问题背景 .hook {
+      background: #ffb02e;
+      color: #161616;
+    }
+    .card-问题背景 .point:nth-child(1) {
+      transform: rotate(-1deg);
+    }
+    .card-问题背景 .point:nth-child(2) {
+      transform: rotate(1deg);
+    }
+    .card-方法拆解 {
+      background:
+        linear-gradient(90deg, rgba(22,22,22,.07) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(22,22,22,.07) 1px, transparent 1px),
+        #f6fbff;
+      background-size: 34px 34px;
+    }
+    .card-方法拆解 .kicker {
+      box-shadow: 8px 8px 0 #b9ff59;
+    }
+    .card-方法拆解 .hook {
+      background: #59baff;
+      color: #161616;
+    }
+    .card-方法拆解 .point-number {
+      background: #59baff;
+      color: #161616;
+      border: 5px solid #161616;
+    }
+    .card-案例启发,
+    .card-金句总结 {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(185,255,89,.42) 0 10%, transparent 22%),
+        linear-gradient(90deg, rgba(22,22,22,.07) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(22,22,22,.07) 1px, transparent 1px),
+        #fffdf6;
+      background-size: auto, 38px 38px, 38px 38px, auto;
+    }
+    .card-案例启发 .hook,
+    .card-金句总结 .hook {
+      background: #161616;
+      color: #ffffff;
+    }
+    .card-案例启发 .point,
+    .card-金句总结 .point {
+      background: #fffef9;
+    }
     """
 
 
@@ -333,10 +380,18 @@ def build_hook(card: dict[str, str], points: list[str]) -> str:
         return points[0] if points else clean_card_body(card["body"])
     if card["kind"] == "封面":
         return "这不是替代焦虑，是能力平权"
+    if card["kind"] == "问题背景":
+        return "先把矛盾讲清楚"
     if card["kind"] == "核心观点":
         return f"{len(points)} 个判断，一图看懂"
+    if card["kind"] == "方法拆解":
+        return "照这个路径执行"
     if card["kind"] == "总结行动":
         return f"{len(points)} 个动作，马上能练"
+    if card["kind"] == "案例启发":
+        return "把经验变成模板"
+    if card["kind"] == "金句总结":
+        return "最后留一句判断"
     return f"{len(points)} 个重点，拆开看"
 
 

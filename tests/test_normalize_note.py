@@ -37,20 +37,23 @@ class NormalizeNoteTests(unittest.TestCase):
             "1. 第一条\n\n过去如此。\n\n2. 第二条\n\n现在如此。\n\n3. 第三条",
         )
 
-    def test_extract_image_placeholders_returns_three_structured_cards(self):
+    def test_extract_image_placeholders_returns_five_structured_cards(self):
         module = load_module()
         text = (
             "[图1: 封面 | 核心钩子: AI红利消失]\n"
-            "[图2: 核心观点 | 三个判断: 工具,流程,分发]\n"
-            "[图3: 总结行动 | 建议清单: 先做工作流]"
+            "[图2: 问题背景 | 关键矛盾: 工具很多,问题不清]\n"
+            "[图3: 核心观点 | 三个判断: 工具,流程,分发]\n"
+            "[图4: 方法拆解 | 操作路径: 先写需求,再拆任务]\n"
+            "[图5: 总结行动 | 建议清单: 先做工作流]"
         )
 
         cards = module.extract_image_placeholders(text)
 
-        self.assertEqual([card["index"] for card in cards], [1, 2, 3])
+        self.assertEqual([card["index"] for card in cards], [1, 2, 3, 4, 5])
         self.assertEqual(cards[0]["kind"], "封面")
         self.assertIn("AI红利消失", cards[0]["content"])
-        self.assertEqual(cards[2]["kind"], "总结行动")
+        self.assertEqual(cards[1]["kind"], "问题背景")
+        self.assertEqual(cards[4]["kind"], "总结行动")
 
     def test_scan_light_risks_flags_absolute_income_and_unverified_claims(self):
         module = load_module()

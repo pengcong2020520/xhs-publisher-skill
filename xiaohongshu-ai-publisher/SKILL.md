@@ -1,11 +1,11 @@
 ---
 name: xiaohongshu-ai-publisher
-description: Create confirmed Xiaohongshu (小红书) AI-content image posts from pasted articles, Markdown, or local .md/.txt files. Use when the user wants to turn AI-related content into Xiaohongshu viewpoint copy, repair numbering, generate three high-resolution HTML screenshot cards, check xiaohongshu-cli login status, and publish with explicit confirmation through `xhs post`.
+description: Create confirmed Xiaohongshu (小红书) AI-content image posts from pasted articles, Markdown, or local .md/.txt files. Use when the user wants to turn AI-related content into Xiaohongshu viewpoint copy, repair numbering, generate 5-6 high-resolution HTML screenshot cards, check xiaohongshu-cli login status, and publish with explicit confirmation through `xhs post`.
 ---
 
 # Xiaohongshu AI Publisher
 
-Use this skill to transform AI-related long-form content into a Xiaohongshu viewpoint note with three generated cards and a guarded direct-publish flow.
+Use this skill to transform AI-related long-form content into a Xiaohongshu viewpoint note with 5-6 generated cards and a guarded direct-publish flow.
 
 ## Non-Negotiable Gates
 
@@ -35,10 +35,13 @@ Create a run directory before generating artifacts, such as `runs/YYYYMMDD-HHMM-
    - A strong but non-exaggerated title.
    - Short paragraphs.
    - Clean ordered lists.
-   - Three image placeholders:
+   - Five image placeholders by default, six when the source has a useful case/example:
      - `[图1: 封面 | 核心钩子: ...]`
-     - `[图2: 核心观点 | 三个判断: ...]`
-     - `[图3: 总结行动 | 建议清单: ...]`
+     - `[图2: 问题背景 | 关键矛盾: ...]`
+     - `[图3: 核心观点 | 三个判断: ...]`
+     - `[图4: 方法拆解 | 操作路径: ...]`
+     - `[图5: 总结行动 | 建议清单: ...]`
+     - Optional: `[图6: 案例启发 | 可复用经验: ...]`
    - 3-6 Xiaohongshu tags.
    - A calm interaction question.
 5. Run `scripts/normalize_note.py` to repair numbering and scan light risks.
@@ -59,8 +62,9 @@ Create a run directory before generating artifacts, such as `runs/YYYYMMDD-HHMM-
 
 - `scripts/render_cards.py`
   - Reads normalized JSON.
-  - Builds three HTML card files using the approved Xiaohongshu visual theme:
+  - Builds 5-6 HTML card files using the approved Xiaohongshu visual theme:
     - A bold grid-paper cover with large black title, thick border, neon highlight, and separated point cards.
+    - Light grid-paper context and method cards for conflict framing and practical steps.
     - A dark glassmorphism core-view card for judgment lists.
     - A light grid-paper action card for practical checklists.
   - Splits semicolon, comma, Chinese comma, and enumeration separator clauses into independent visual points.

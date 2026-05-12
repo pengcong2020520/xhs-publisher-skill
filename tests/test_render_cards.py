@@ -15,19 +15,25 @@ def load_module():
 
 
 class RenderCardsTests(unittest.TestCase):
-    def test_build_cards_from_placeholders_returns_three_card_models(self):
+    def test_build_cards_from_placeholders_returns_five_card_models(self):
         module = load_module()
         cards = module.build_cards_from_placeholders(
             [
                 {"index": 1, "kind": "封面", "content": "核心钩子: AI红利消失"},
-                {"index": 2, "kind": "核心观点", "content": "三个判断: 工具,流程,分发"},
-                {"index": 3, "kind": "总结行动", "content": "建议清单: 先做工作流"},
+                {"index": 2, "kind": "问题背景", "content": "关键矛盾: 工具很多,问题不清"},
+                {"index": 3, "kind": "核心观点", "content": "三个判断: 工具,流程,分发"},
+                {"index": 4, "kind": "方法拆解", "content": "操作路径: 先写需求,再拆任务"},
+                {"index": 5, "kind": "总结行动", "content": "建议清单: 先做工作流"},
             ],
             title="普通人别再追AI工具了",
         )
 
-        self.assertEqual([card["filename"] for card in cards], ["card-01.html", "card-02.html", "card-03.html"])
+        self.assertEqual(
+            [card["filename"] for card in cards],
+            ["card-01.html", "card-02.html", "card-03.html", "card-04.html", "card-05.html"],
+        )
         self.assertEqual(cards[0]["headline"], "普通人别再追AI工具了")
+        self.assertEqual(cards[1]["headline"], "问题背景")
         self.assertIn("AI红利消失", cards[0]["body"])
 
     def test_write_card_html_outputs_responsive_html_files(self):
@@ -98,6 +104,22 @@ class RenderCardsTests(unittest.TestCase):
         self.assertNotIn("不是程序员消失了;是普通人也能调用编程能力", html)
         self.assertIn("不是程序员消失了", html)
         self.assertIn("是普通人也能调用编程能力", html)
+
+    def test_build_hook_supports_five_page_story_arc(self):
+        module = load_module()
+
+        self.assertEqual(
+            module.build_hook({"kind": "问题背景", "body": ""}, ["工具越来越多", "判断越来越难"]),
+            "先把矛盾讲清楚",
+        )
+        self.assertEqual(
+            module.build_hook({"kind": "方法拆解", "body": ""}, ["先写需求", "再拆任务"]),
+            "照这个路径执行",
+        )
+        self.assertEqual(
+            module.build_hook({"kind": "案例启发", "body": ""}, ["一个真实场景", "一条复用经验"]),
+            "把经验变成模板",
+        )
 
 
 if __name__ == "__main__":
